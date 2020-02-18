@@ -14,14 +14,16 @@ import {
     Card,
     Button,
     SafeAreaView,
-    EventCard
+    EventCard,
+    ListThumbSquare,
+    PostListItem
 } from "@components";
 import { BaseStyle, BaseColor, Images } from "@config";
 import * as Utils from "@utils";
 import styles from "./styles";
 
 // Load sample data
-import { PromotionData, TourData, HotelData } from "@data";
+import { PromotionData, TourData, HotelData, MessagesData } from "@data";
 
 export default class Home extends Component {
     constructor(props) {
@@ -49,26 +51,6 @@ export default class Home extends Component {
                     icon: "plane",
                     name: "Flight",
                     route: "FlightSearch"
-                },
-                {
-                    icon: "ship",
-                    name: "Cruise",
-                    route: "CruiseSearch"
-                },
-                {
-                    icon: "bus",
-                    name: "Bus",
-                    route: "BusSearch"
-                },
-                {
-                    icon: "star",
-                    name: "Event",
-                    route: "DashboardEvent"
-                },
-                {
-                    icon: "ellipsis-h",
-                    name: "More",
-                    route: "More"
                 }
             ],
             relate: [
@@ -90,7 +72,35 @@ export default class Home extends Component {
             promotion: PromotionData,
             tours: TourData,
             hotels: HotelData.splice(0, 4),
-            heightHeader: Utils.heightHeader()
+            heightHeader: Utils.heightHeader(),
+            messenger: MessagesData,
+            todo: [
+                {
+                    id: "1",
+                    title: "South Travon",
+                    image: Images.trip1
+                },
+                {
+                    id: "2",
+                    title: "South Travon",
+                    image: Images.trip2
+                },
+                {
+                    id: "3",
+                    title: "South Travon",
+                    image: Images.trip3
+                },
+                {
+                    id: "4",
+                    title: "South Travon",
+                    image: Images.trip4
+                },
+                {
+                    id: "5",
+                    title: "South Travon",
+                    image: Images.trip5
+                }
+            ],
         };
         this._deltaY = new Animated.Value(0);
     }
@@ -139,8 +149,8 @@ export default class Home extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { promotion, tours, hotels, relate, heightHeader } = this.state;
-        const heightImageBanner = Utils.scaleWithPixel(140);
+        const { promotion, tours, hotels, relate, heightHeader, messenger, todo } = this.state;
+        const heightImageBanner = Utils.scaleWithPixel(70);
         const marginTopBanner = heightImageBanner - heightHeader;
         return (
             <View style={{ flex: 1 }}>
@@ -205,55 +215,47 @@ export default class Home extends Component {
                                 {this.renderIconService()}
                             </View>
                         </View>
-                        <View>
-                            <Text
-                                title3
-                                semibold
-                                style={{ marginLeft: 20, marginVertical: 10 }}
+                        {/* Todo Things */}
+                        <View style={styles.blockView}>
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    marginBottom: 10,
+                                    alignItems: "flex-end"
+                                }}
                             >
-                                Promos Today
-                            </Text>
+                                <Text headline semibold>
+                                    My Assignment
+                                    </Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        navigation.navigate("Post");
+                                    }}
+                                >
+                                    <Text caption1 grayColor>
+                                        Show More
+                                        </Text>
+                                </TouchableOpacity>
+                            </View>
                             <FlatList
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
-                                data={promotion}
+                                data={todo}
                                 keyExtractor={(item, index) => item.id}
-                                renderItem={({ item, index }) => (
-                                    <Card
-                                        style={[
-                                            styles.promotionItem,
-                                            index == 0
-                                                ? { marginHorizontal: 20 }
-                                                : { marginRight: 20 }
-                                        ]}
+                                renderItem={({ item }) => (
+                                    <PostListItem
+                                        style={{ marginRight: 20 }}
+                                        title="South Travon"
+                                        date="End Date: 29-02-2020"
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                                         image={item.image}
-                                        onPress={() =>
-                                            navigation.navigate("HotelDetail")
-                                        }
-                                    >
-                                        <Text subhead whiteColor>
-                                            {item.title1}
-                                        </Text>
-                                        <Text title2 whiteColor semibold>
-                                            {item.title2}
-                                        </Text>
-                                        <View
-                                            style={styles.contentCartPromotion}
-                                        >
-                                            <Button
-                                                style={styles.btnPromotion}
-                                                onPress={() => {
-                                                    navigation.navigate(
-                                                        "PreviewBooking"
-                                                    );
-                                                }}
-                                            >
-                                                <Text body2 semibold whiteColor>
-                                                    Book Now
-                                                </Text>
-                                            </Button>
-                                        </View>
-                                    </Card>
+                                        onPress={() => {
+                                            navigation.navigate(
+                                                "PostDetail"
+                                            );
+                                        }}
+                                    />
                                 )}
                             />
                         </View>
@@ -261,7 +263,7 @@ export default class Home extends Component {
                         <View>
                             <View style={styles.contentHiking}>
                                 <Text title3 semibold>
-                                    Tours
+                                    Management User
                                 </Text>
                                 <Text body2 grayColor>
                                     Let find out what most interesting things
@@ -285,80 +287,66 @@ export default class Home extends Component {
                                             navigation.navigate("TourDetail")
                                         }
                                     >
-                                        <Text headline whiteColor semibold>
+                                        <Text body2 whiteColor semibold>
                                             {item.name}
                                         </Text>
                                     </Card>
                                 )}
                             />
                         </View>
-                        {/* Event*/}
-                        <Text title3 semibold style={{ padding: 20 }}>
-                            Up Comming Events
-                        </Text>
+                        {/* Hiking */}
                         <View>
+                            <View style={styles.contentHiking}>
+                                <Text title3 semibold>
+                                    Soft Skill
+                                </Text>
+                                <Text body2 grayColor>
+                                    Let find out what most interesting things
+                                </Text>
+                            </View>
                             <FlatList
-                                contentContainerStyle={{
-                                    paddingRight: 20
-                                }}
                                 horizontal={true}
-                                data={relate}
                                 showsHorizontalScrollIndicator={false}
+                                data={tours}
                                 keyExtractor={(item, index) => item.id}
                                 renderItem={({ item, index }) => (
-                                    <EventCard
+                                    <Card
+                                        style={[
+                                            styles.tourItem,
+                                            index == 0
+                                                ? { marginHorizontal: 20 }
+                                                : { marginRight: 20 }
+                                        ]}
                                         image={item.image}
-                                        title={item.title}
-                                        time={item.time}
-                                        location={item.location}
                                         onPress={() =>
-                                            navigation.navigate("EventDetail")
+                                            navigation.navigate("TourDetail")
                                         }
-                                        style={{ marginLeft: 20 }}
-                                    />
+                                    >
+                                        <Text body2 whiteColor semibold>
+                                            {item.name}
+                                        </Text>
+                                    </Card>
                                 )}
                             />
                         </View>
-                        {/* Promotion */}
-                        <View
-                            style={{
-                                padding: 20
-                            }}
-                        >
-                            <Text title3 semibold>
-                                Promotion
-                            </Text>
-                            <Text body2 grayColor>
-                                What’s the Worst That Could Happen
-                            </Text>
-                            <Image
-                                source={Images.banner1}
-                                style={styles.promotionBanner}
-                            />
-                            <View style={styles.line} />
+                        <View>
+                            <View style={styles.contentHiking}>
+                                <Text title3 semibold>
+                                    Recommendation For You
+                                </Text>
+                            </View>
                             <FlatList
-                                columnWrapperStyle={{ marginBottom: 20 }}
-                                numColumns={2}
-                                data={hotels}
+                                data={messenger}
                                 keyExtractor={(item, index) => item.id}
                                 renderItem={({ item, index }) => (
-                                    <HotelItem
-                                        grid
+                                    <ListThumbSquare
+                                        onPress={() => {
+                                            navigation.navigate("TourDetail");
+                                        }}
                                         image={item.image}
-                                        name={item.name}
-                                        location={item.location}
-                                        price={item.price}
-                                        available={item.available}
-                                        rate={item.rate}
-                                        rateStatus={item.rateStatus}
-                                        numReviews={item.numReviews}
-                                        services={item.services}
-                                        style={
-                                            index % 2 ? { marginLeft: 15 } : {}
-                                        }
-                                        onPress={() =>
-                                            navigation.navigate("HotelDetail")
-                                        }
+                                        txtLeftTitle={item.user}
+                                        txtContent={item.message}
+                                        txtRight={item.date}
                                     />
                                 )}
                             />

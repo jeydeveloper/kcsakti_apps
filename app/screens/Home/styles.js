@@ -4,7 +4,7 @@ import * as Utils from "@utils";
 
 export default StyleSheet.create({
     imageBackground: {
-        height: 140,
+        height: 70,
         width: "100%",
         position: "absolute"
     },
@@ -74,7 +74,13 @@ export default StyleSheet.create({
     },
     tourItem: {
         borderRadius: 8,
-        width: Utils.scaleWithPixel(135),
-        height: Utils.scaleWithPixel(160)
-    }
+        width: Utils.scaleWithPixel(130),
+        height: Utils.scaleWithPixel(100)
+    },
+    blockView: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderBottomColor: BaseColor.textSecondaryColor,
+        borderBottomWidth: 1
+    },
 });
