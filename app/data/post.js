@@ -8,7 +8,7 @@ const PostData = [
         description:
             "Lorem ipsum dolor sit amet, velit tamquam eum et, pro agam sanctus minimum ut. Usu prompta invidunt at, noluisse ponderum nec ne. ",
         authorImage: Images.profile2,
-        name: "Steve Garrett",
+        name: "Management User",
         detail: "5 hours ago | 100k views",
         date: "Jun 2018"
     },
@@ -19,7 +19,7 @@ const PostData = [
         description:
             "Lorem ipsum dolor sit amet, velit tamquam eum et, pro agam sanctus minimum ut. Usu prompta invidunt at, noluisse ponderum nec ne. ",
         authorImage: Images.profile4,
-        name: "Carla Houston",
+        name: "Soft Skill",
         detail: "4 hours 30 mins ago | 50 views",
         date: "Jun 2018"
     },
@@ -30,7 +30,7 @@ const PostData = [
         description:
             "Lorem ipsum dolor sit amet, velit tamquam eum et, pro agam sanctus minimum ut. Usu prompta invidunt at, noluisse ponderum nec ne. ",
         authorImage: Images.profile2,
-        name: "Steve Garrett",
+        name: "Information Technology",
         detail: "5 hours ago | 100k views",
         date: "Jun 2018"
     },
@@ -41,7 +41,7 @@ const PostData = [
         description:
             "Lorem ipsum dolor sit amet, velit tamquam eum et, pro agam sanctus minimum ut. Usu prompta invidunt at, noluisse ponderum nec ne. ",
         authorImage: Images.profile4,
-        name: "Carla Houston",
+        name: "Knowledge",
         detail: "4 hours 30 mins ago | 50 views",
         date: "Jun 2018"
     }

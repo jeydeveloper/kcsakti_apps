@@ -3,7 +3,9 @@ import { View, ScrollView, TouchableOpacity, Switch } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { AuthActions } from "@actions";
-import { BaseStyle, BaseColor, BaseSetting } from "@config";
+import { TabView, TabBar } from "react-native-tab-view";
+import { BaseStyle, BaseColor, BaseSetting, Images } from "@config";
+import * as Utils from "@utils";
 import {
     Header,
     SafeAreaView,
@@ -11,7 +13,8 @@ import {
     Text,
     Button,
     ProfileDetail,
-    ProfilePerformance
+    ProfilePerformance,
+    PostListItem
 } from "@components";
 import styles from "./styles";
 
@@ -24,7 +27,13 @@ class Profile extends Component {
         this.state = {
             reminders: false,
             loading: false,
-            userData: UserData[0]
+            userData: UserData[0],
+            index: 0,
+            routes: [
+                { key: "history", title: "History" },
+                { key: "recent", title: "Recent" },
+                { key: "certificate", title: "Certificate" }
+            ]
         };
     }
 
@@ -57,6 +66,62 @@ class Profile extends Component {
         this.setState({ reminders: value });
     };
 
+    _handleIndexChange = index =>
+        this.setState({
+            index
+        });
+
+    _renderTabBar = props => (
+        <TabBar
+            {...props}
+            scrollEnabled
+            indicatorStyle={styles.indicator}
+            style={styles.tabbar}
+            tabStyle={styles.tab}
+            inactiveColor={BaseColor.grayColor}
+            activeColor={BaseColor.textPrimaryColor}
+            renderLabel={({ route, focused, color }) => (
+                <View
+                    style={{
+                        flex: 1,
+                        width: Utils.getWidthDevice() / 3,
+                        alignItems: "center"
+                    }}
+                >
+                    <Text headline semibold={focused} style={{ color }}>
+                        {route.title}
+                    </Text>
+                </View>
+            )}
+        />
+    );
+
+    _renderScene = ({ route, jumpTo }) => {
+        switch (route.key) {
+            case "history":
+                return (
+                    <HistoryTab
+                        jumpTo={jumpTo}
+                        navigation={this.props.navigation}
+                    />
+                );
+            case "recent":
+                return (
+                    <RecentTab
+                        jumpTo={jumpTo}
+                        navigation={this.props.navigation}
+                    />
+                );
+            case "certificate":
+                return (
+                    <CertificateTab
+                        jumpTo={jumpTo}
+                        navigation={this.props.navigation}
+                    />
+                );
+        }
+    };
+
     render() {
         const { navigation } = this.props;
         const { userData, loading } = this.state;
@@ -67,15 +132,6 @@ class Profile extends Component {
             >
                 <Header
                     title="Profile"
-                    renderLeft={() => {
-                        return (
-                            <Icon
-                                name="arrow-left"
-                                size={20}
-                                color={BaseColor.primaryColor}
-                            />
-                        );
-                    }}
                     renderRight={() => {
                         return (
                             <Icon
@@ -85,23 +141,8 @@ class Profile extends Component {
                             />
                         );
                     }}
-                    renderRightSecond={() => {
-                        return (
-                            <Icon
-                                name="envelope"
-                                size={24}
-                                color={BaseColor.primaryColor}
-                            />
-                        );
-                    }}
-                    onPressLeft={() => {
-                        navigation.goBack();
-                    }}
                     onPressRight={() => {
                         navigation.navigate("Notification");
-                    }}
-                    onPressRightSecond={() => {
-                        navigation.navigate("Messenger");
                     }}
                 />
                 <ScrollView>
@@ -109,16 +150,8 @@ class Profile extends Component {
                         <ProfileDetail
                             image={userData.image}
                             textFirst={userData.name}
-                            point={userData.point}
                             textSecond={userData.address}
-                            textThird={userData.id}
-                            onPress={() =>
-                                navigation.navigate("ProfileExanple")
-                            }
-                        />
-                        <ProfilePerformance
-                            data={userData.performance}
-                            style={{ marginTop: 20, marginBottom: 20 }}
+                            icon={false}
                         />
                         <View style={{ width: "100%" }}>
                             <TouchableOpacity
@@ -149,71 +182,15 @@ class Profile extends Component {
                                     style={{ marginLeft: 5 }}
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.profileItem}
-                                onPress={() => {
-                                    navigation.navigate("ChangeLanguage");
-                                }}
-                            >
-                                <Text body1>Language</Text>
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center"
-                                    }}
-                                >
-                                    <Text body1 grayColor>
-                                        English
-                                    </Text>
-                                    <Icon
-                                        name="angle-right"
-                                        size={18}
-                                        color={BaseColor.primaryColor}
-                                        style={{ marginLeft: 5 }}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.profileItem}
-                                onPress={() => {
-                                    navigation.navigate("Currency");
-                                }}
-                            >
-                                <Text body1>Currency</Text>
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center"
-                                    }}
-                                >
-                                    <Text body1 grayColor>
-                                        USD
-                                    </Text>
-                                    <Icon
-                                        name="angle-right"
-                                        size={18}
-                                        color={BaseColor.primaryColor}
-                                        style={{ marginLeft: 5 }}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <View style={styles.profileItem}>
-                                <Text body1>Reminders</Text>
-                                <Switch
-                                    name="angle-right"
-                                    size={18}
-                                    onValueChange={this.toggleSwitch}
-                                    value={this.state.reminders}
-                                />
-                            </View>
-                            <View style={styles.profileItem}>
-                                <Text body1>App Version</Text>
-                                <Text body1 grayColor>
-                                    {BaseSetting.appVersion}
-                                </Text>
-                            </View>
                         </View>
                     </View>
+                    <TabView
+                        lazy
+                        navigationState={this.state}
+                        renderScene={this._renderScene}
+                        renderTabBar={this._renderTabBar}
+                        onIndexChange={this._handleIndexChange}
+                    />
                 </ScrollView>
                 <View style={{ padding: 20 }}>
                     <Button
@@ -225,6 +202,105 @@ class Profile extends Component {
                     </Button>
                 </View>
             </SafeAreaView>
+        );
+    }
+}
+
+class HistoryTab extends Component {
+    constructor(props) {
+        super();
+    }
+
+    render() {
+        return (
+            <View style={{
+                marginTop: 20
+            }}>
+            <PostListItem
+                title="See The Unmatched"
+                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                image={Images.trip9}
+                onPress={() => {
+                    navigation.navigate("Post");
+                }}
+            />
+            <PostListItem
+                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                title="Top 15 Things Must To Do"
+                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                image={Images.trip8}
+                onPress={() => {
+                    navigation.navigate("Post");
+                }}
+            />
+        </View>
+        );
+    }
+}
+
+class RecentTab extends Component {
+    constructor(props) {
+        super();
+    }
+
+    render() {
+        return (
+            <View style={{
+                marginTop: 20
+            }}>
+            <PostListItem
+                title="See The Unmatched"
+                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                image={Images.trip9}
+                onPress={() => {
+                    navigation.navigate("Post");
+                }}
+            />
+            <PostListItem
+                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                title="Top 15 Things Must To Do"
+                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                image={Images.trip8}
+                onPress={() => {
+                    navigation.navigate("Post");
+                }}
+            />
+        </View>
+        );
+    }
+}
+
+class CertificateTab extends Component {
+    constructor(props) {
+        super();
+    }
+
+    render() {
+        return (
+            <View style={{
+                marginTop: 20
+            }}>
+            <PostListItem
+                title="See The Unmatched"
+                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                image={Images.trip9}
+                onPress={() => {
+                    navigation.navigate("Post");
+                }}
+            />
+            <PostListItem
+                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                title="Top 15 Things Must To Do"
+                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                image={Images.trip8}
+                onPress={() => {
+                    navigation.navigate("Post");
+                }}
+            />
+        </View>
         );
     }
 }

@@ -29,7 +29,7 @@ export default class BookingHistory extends Component {
                 <View style={styles.mainContent}>
                     <View style={{ flex: 1 }}>
                         <Text caption2 whiteColor>
-                            Check In
+                            Start Date
                         </Text>
                         <Text body1 whiteColor semibold>
                             {checkIn}
@@ -37,7 +37,7 @@ export default class BookingHistory extends Component {
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-end" }}>
                         <Text caption2 whiteColor>
-                            Check Out
+                            End Date
                         </Text>
                         <Text body1 whiteColor semibold>
                             {checkOut}

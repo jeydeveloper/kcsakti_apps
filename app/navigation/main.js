@@ -81,6 +81,9 @@ import EventDetail from "@screens/EventDetail";
 import EventPreviewBooking from "@screens/EventPreviewBooking";
 import DashboardEvent from "@screens/DashboardEvent";
 import EventTicket from "@screens/EventTicket";
+import MyLearning from "@screens/MyLearning";
+import Calendar from "@screens/Calendar";
+import MyCalendar from "../screens/Calendar";
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({ scenes }) => {
@@ -121,26 +124,26 @@ const routeConfigs = {
         })
     },
     Booking: {
-        screen: Booking,
+        screen: MyLearning,
         navigationOptions: ({ navigation }) => ({
-            title: "Booking",
+            title: "My Learning",
             tabBarIcon: ({ focused, tintColor }) => {
                 return (
-                    <Icon color={tintColor} name="bookmark" size={20} solid />
+                    <Icon color={tintColor} name="graduation-cap" size={20} solid />
                 );
             }
         })
     },
     Messenger: {
-        screen: Messenger,
+        screen: Post,
         navigationOptions: ({ navigation }) => ({
-            title: "Message",
+            title: "Library",
             tabBarIcon: ({ focused, tintColor }) => {
                 return (
                     <Icon
                         solid
                         color={tintColor}
-                        name="envelope"
+                        name="book-open"
                         size={20}
                         solid
                     />
@@ -149,11 +152,11 @@ const routeConfigs = {
         })
     },
     Post: {
-        screen: Post,
+        screen: MyCalendar,
         navigationOptions: ({ navigation }) => ({
-            title: "News",
+            title: "Calendar",
             tabBarIcon: ({ focused, tintColor }) => {
-                return <Icon color={tintColor} name="copy" size={20} solid />;
+                return <Icon color={tintColor} name="calendar" size={20} solid />;
             }
         })
     },
@@ -363,6 +366,12 @@ const StackNavigator = createStackNavigator(
         },
         DashboardEvent: {
             screen: DashboardEvent
+        },
+        MyLearning: {
+            screen: MyLearning
+        },
+        MyCalendar: {
+            screen: MyCalendar
         }
     },
     {

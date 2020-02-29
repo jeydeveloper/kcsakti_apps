@@ -33,24 +33,29 @@ export default class Home extends Component {
         this.state = {
             icons: [
                 {
-                    icon: "calendar-alt",
-                    name: "Hotel",
-                    route: "Hotel"
+                    icon: "gamepad",
+                    name: "Interactive",
+                    route: "Messenger"
                 },
                 {
-                    icon: "map-marker-alt",
-                    name: "Tour",
-                    route: "Tour"
+                    icon: "video",
+                    name: "Video",
+                    route: "Messenger"
                 },
                 {
-                    icon: "car-alt",
-                    name: "Car",
-                    route: "OverViewCar"
+                    icon: "book",
+                    name: "Book",
+                    route: "Messenger"
                 },
                 {
-                    icon: "plane",
-                    name: "Flight",
-                    route: "FlightSearch"
+                    icon: "headphones-alt",
+                    name: "Audio",
+                    route: "Messenger"
+                },
+                {
+                    icon: "question",
+                    name: "Quiz",
+                    route: "Messenger"
                 }
             ],
             relate: [
@@ -118,7 +123,7 @@ export default class Home extends Component {
         return (
             <FlatList
                 data={icons}
-                numColumns={4}
+                numColumns={5}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => {
                     return (
@@ -132,7 +137,7 @@ export default class Home extends Component {
                             <View style={styles.iconContent}>
                                 <Icon
                                     name={item.icon}
-                                    size={18}
+                                    size={14}
                                     color={BaseColor.primaryColor}
                                     solid
                                 />
@@ -230,7 +235,7 @@ export default class Home extends Component {
                                     </Text>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        navigation.navigate("Post");
+                                        navigation.navigate("Booking");
                                     }}
                                 >
                                     <Text caption1 grayColor>
@@ -261,13 +266,28 @@ export default class Home extends Component {
                         </View>
                         {/* Hiking */}
                         <View>
-                            <View style={styles.contentHiking}>
-                                <Text title3 semibold>
-                                    Management User
-                                </Text>
-                                <Text body2 grayColor>
-                                    Let find out what most interesting things
-                                </Text>
+                            <View style={styles.blockViewOther}>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        marginBottom: 10,
+                                        alignItems: "flex-end"
+                                    }}
+                                >
+                                    <Text headline semibold>
+                                        Management User
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate("Messenger");
+                                        }}
+                                    >
+                                        <Text caption1 grayColor>
+                                            Show More
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                             <FlatList
                                 horizontal={true}
@@ -284,7 +304,7 @@ export default class Home extends Component {
                                         ]}
                                         image={item.image}
                                         onPress={() =>
-                                            navigation.navigate("TourDetail")
+                                            navigation.navigate("PostDetail")
                                         }
                                     >
                                         <Text body2 whiteColor semibold>
@@ -296,13 +316,28 @@ export default class Home extends Component {
                         </View>
                         {/* Hiking */}
                         <View>
-                            <View style={styles.contentHiking}>
-                                <Text title3 semibold>
-                                    Soft Skill
-                                </Text>
-                                <Text body2 grayColor>
-                                    Let find out what most interesting things
-                                </Text>
+                        <View style={styles.blockViewOther}>
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        marginBottom: 10,
+                                        alignItems: "flex-end"
+                                    }}
+                                >
+                                    <Text headline semibold>
+                                        Soft Skill
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate("Messenger");
+                                        }}
+                                    >
+                                        <Text caption1 grayColor>
+                                            Show More
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                             <FlatList
                                 horizontal={true}
@@ -319,7 +354,7 @@ export default class Home extends Component {
                                         ]}
                                         image={item.image}
                                         onPress={() =>
-                                            navigation.navigate("TourDetail")
+                                            navigation.navigate("PostDetail")
                                         }
                                     >
                                         <Text body2 whiteColor semibold>
@@ -329,26 +364,31 @@ export default class Home extends Component {
                                 )}
                             />
                         </View>
-                        <View>
+                        <View style={{
+                            marginBottom: 20
+                        }}>
                             <View style={styles.contentHiking}>
                                 <Text title3 semibold>
                                     Recommendation For You
                                 </Text>
                             </View>
-                            <FlatList
-                                data={messenger}
-                                keyExtractor={(item, index) => item.id}
-                                renderItem={({ item, index }) => (
-                                    <ListThumbSquare
-                                        onPress={() => {
-                                            navigation.navigate("TourDetail");
-                                        }}
-                                        image={item.image}
-                                        txtLeftTitle={item.user}
-                                        txtContent={item.message}
-                                        txtRight={item.date}
-                                    />
-                                )}
+                            <PostListItem
+                                title="See The Unmatched"
+                                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                                image={Images.trip9}
+                                onPress={() => {
+                                    navigation.navigate("Post");
+                                }}
+                            />
+                            <PostListItem
+                                description="Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim."
+                                title="Top 15 Things Must To Do"
+                                style={{ marginTop: 10, width: '100%', paddingHorizontal: 20 }}
+                                image={Images.trip8}
+                                onPress={() => {
+                                    navigation.navigate("Post");
+                                }}
                             />
                         </View>
                     </ScrollView>

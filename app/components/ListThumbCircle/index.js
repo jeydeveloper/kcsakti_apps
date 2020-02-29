@@ -22,7 +22,9 @@ export default class ListThumbCircle extends Component {
                 activeOpacity={0.9}
             >
                 <View style={styles.contain}>
-                    <Image source={image} style={[styles.thumb, imageStyle]} />
+                    {image ? 
+                    <Image source={image} style={[styles.thumb, imageStyle]} /> : null
+                    }
                     <View style={styles.content}>
                         <View style={styles.left}>
                             <Text headline semibold>

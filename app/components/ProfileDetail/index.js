@@ -32,11 +32,13 @@ export default class ProfileDetail extends Component {
                             source={image}
                             style={[styles.thumb, styleThumb]}
                         />
+                        {point ?
                         <View style={styles.point}>
                             <Text overline whiteColor semibold>
                                 {point}
                             </Text>
-                        </View>
+                        </View> : null
+                        }
                     </View>
                     <View>
                         <Text headline semibold numberOfLines={1}>

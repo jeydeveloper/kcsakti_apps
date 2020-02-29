@@ -13,23 +13,26 @@ class SignIn extends Component {
         this.state = {
             id: "adminlxp@mail.com",
             password: "lxp#2019",
+            domain: "",
             loading: false,
             success: {
                 id: true,
-                password: true
+                password: true,
+                domain: true
             }
         };
     }
 
     onLogin = async () => {
-        const { id, password, success } = this.state;
+        const { id, password, success, domain } = this.state;
         const { navigation } = this.props;
-        if (id == "" || password == "") {
+        if (id == "" || password == "" || domain == "") {
             this.setState({
                 success: {
                     ...success,
                     id: false,
-                    password: false
+                    password: false,
+                    domain: false
                 }
             });
         } else {
@@ -62,16 +65,17 @@ class SignIn extends Component {
             },
             body: JSON.stringify({
                 "email": id,
-                "password": password
+                "password": password,
+                "domain": domain
             })
         })
             .then((response) => response.json())
             .then((res) => {
-                if(res.errors) {
-                    Alert.alert("Login Failed", "Error: "+ res.errors.message);
+                if (res.errors) {
+                    Alert.alert("Login Failed", "Error: " + res.errors.message);
                 } else {
                     this.props.actions.authentication(true, response => {
-                        if(response.success) {
+                        if (response.success) {
                             navigation.navigate("Loading");
                         }
                     });
@@ -81,7 +85,7 @@ class SignIn extends Component {
                 });
             })
             .catch((error) => {
-                Alert.alert("Server Error", "Error: "+ error);
+                Alert.alert("Server Error", "Error: " + error);
             });
     }
 
@@ -111,6 +115,27 @@ class SignIn extends Component {
                     <View style={styles.contain}>
                         <TextInput
                             style={[BaseStyle.textInput, { marginTop: 65 }]}
+                            onChangeText={text => this.setState({ domain: text })}
+                            onFocus={() => {
+                                this.setState({
+                                    success: {
+                                        ...this.state.success,
+                                        domain: true
+                                    }
+                                });
+                            }}
+                            autoCorrect={false}
+                            placeholder="exp: guest.kcsakti.com"
+                            placeholderTextColor={
+                                this.state.success.domain
+                                    ? BaseColor.grayColor
+                                    : BaseColor.primaryColor
+                            }
+                            value={this.state.domain}
+                            selectionColor={BaseColor.primaryColor}
+                        />
+                        <TextInput
+                            style={[BaseStyle.textInput, { marginTop: 10 }]}
                             onChangeText={text => this.setState({ id: text })}
                             onFocus={() => {
                                 this.setState({

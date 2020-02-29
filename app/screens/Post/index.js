@@ -29,7 +29,21 @@ export default class Post extends Component {
                 style={BaseStyle.safeAreaView}
                 forceInset={{ top: "always" }}
             >
-                <Header title="Post" />
+                <Header 
+                    title="Library" 
+                    renderLeft={() => {
+                        return (
+                            <Icon
+                                name="arrow-left"
+                                size={20}
+                                color={BaseColor.primaryColor}
+                            />
+                        );
+                    }}
+                    onPressLeft={() => {
+                        navigation.goBack();
+                    }}
+                />
                 <FlatList
                     refreshControl={
                         <RefreshControl
@@ -46,12 +60,10 @@ export default class Post extends Component {
                             image={item.image}
                             title={item.title}
                             description={item.description}
-                            onPress={() => navigation.navigate("PostDetail")}
+                            onPress={() => (index > 0 ? navigation.navigate("PostDetail") : navigation.navigate("OverViewCar"))}
                         >
                             <ProfileAuthor
-                                image={item.authorImage}
                                 name={item.name}
-                                description={item.detail}
                                 style={{ paddingHorizontal: 20 }}
                             />
                         </PostItem>

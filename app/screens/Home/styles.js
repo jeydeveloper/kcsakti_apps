@@ -56,9 +56,9 @@ export default StyleSheet.create({
     iconContent: {
         justifyContent: "center",
         alignItems: "center",
-        width: 36,
-        height: 36,
-        borderRadius: 18,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
         backgroundColor: BaseColor.fieldColor
     },
     itemService: {
@@ -82,5 +82,10 @@ export default StyleSheet.create({
         paddingHorizontal: 20,
         borderBottomColor: BaseColor.textSecondaryColor,
         borderBottomWidth: 1
+    },
+    blockViewOther: {
+        paddingTop: 10,
+        paddingBottom: 5,
+        paddingHorizontal: 20
     },
 });

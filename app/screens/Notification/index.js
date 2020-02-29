@@ -52,7 +52,6 @@ export default class Notification extends Component {
                     keyExtractor={(item, index) => item.id}
                     renderItem={({ item, index }) => (
                         <ListThumbCircle
-                            image={item.image}
                             txtLeftTitle={item.title}
                             txtContent={item.description}
                             txtRight={item.date}

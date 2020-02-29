@@ -24,14 +24,16 @@ export default class ProfileAuthor extends Component {
                 activeOpacity={0.9}
             >
                 <View style={[styles.contentLeft, styleLeft]}>
-                    <Image source={image} style={[styles.thumb, styleThumb]} />
+                    {image ? <Image source={image} style={[styles.thumb, styleThumb]} /> : null}
                     <View>
                         <Text headline semibold numberOfLines={1}>
                             {name}
                         </Text>
+                        {description ? 
                         <Text footnote grayColor numberOfLines={1}>
                             {description}
-                        </Text>
+                        </Text> : null
+                        }
                     </View>
                 </View>
                 <View style={[styles.contentRight, styleRight]}>

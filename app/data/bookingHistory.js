@@ -3,35 +3,43 @@ import { Images } from "@config";
 const BookingHistoryData = [
     {
         id: "1",
-        name: "Proxeloca Hotel",
+        name: "Learn Skill Soft 1",
         checkIn: "04 Jun 08",
         checkOut: "07 Jun 08",
-        total: "2 Days 1 Night",
-        price: "$399,99"
+        total: "Status",
+        price: "Done"
     },
     {
         id: "2",
-        name: "Proxeloca Hotel",
+        name: "Learn Skill Soft 2",
         checkIn: "04 Jun 08",
         checkOut: "07 Jun 08",
-        total: "2 Days 1 Night",
-        price: "$399,99"
+        total: "Status",
+        price: "Done"
     },
     {
         id: "3",
-        name: "Proxeloca Hotel",
+        name: "Learn Skill Soft 3",
         checkIn: "04 Jun 08",
         checkOut: "07 Jun 08",
-        total: "2 Days 1 Night",
-        price: "$399,99"
+        total: "Status",
+        price: "Done"
     },
     {
         id: "4",
-        name: "Proxeloca Hotel",
+        name: "Learn Skill Soft 4",
         checkIn: "04 Jun 08",
         checkOut: "07 Jun 08",
-        total: "2 Days 1 Night",
-        price: "$399,99"
+        total: "Status",
+        price: "Done"
+    },
+    {
+        id: "5",
+        name: "Learn Skill Soft 5",
+        checkIn: "04 Jun 08",
+        checkOut: "07 Jun 08",
+        total: "Status",
+        price: "Done"
     }
 ];
 
